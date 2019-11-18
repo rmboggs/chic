@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator 
 from datetime import timedelta
 
@@ -50,8 +51,9 @@ class Client(models.Model):
         return "%s - %s" % (self.phone, self.name)
 
 class Appointment(models.Model):
-    client = models.ForeignKey(Client, on_delete = models.PROTECT)
+    client = models.ForeignKey(Client, on_delete = models.PROTECT, blank=True, null=True)
     service = models.ForeignKey(Service, on_delete = models.PROTECT)
+    stylist = models.OneToOneField(User, on_delete = models.PROTECT)
     appointment_time = models.DateTimeField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     completed = models.BooleanField(null=True, default=None)
