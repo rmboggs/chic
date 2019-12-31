@@ -1,3 +1,24 @@
+footer {
+    background-color: #333;
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+}
+footer div {
+    font-size: 0.85em;
+    color: #fff;
+}
+.front-img {
+    padding: 10%;
+    width: 85%;
+}
+.move-down-a-bit {
+  padding-top: 1em;
+}
+h5.success {
+  color: green;
+}
+
 /*---Media Queries --*/
 
 @media (max-width: 992px) {}

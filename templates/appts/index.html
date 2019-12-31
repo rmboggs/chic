@@ -1,4 +1,24 @@
-{% extends "base.html" %}
-{% block content  %}
-<h1>APPTS</h1>
-{% endblock  %}
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+  {% if user.is_authenticated %}
+    <div class="mx-auto move-down-a-bit">
+      {% if message is not None and message != '' %}
+      <h5 class="success">{{ message }}</h5>
+      {% endif %}
+      <form method="post" action="#">
+        {% csrf_token %}
+        <table>
+          {{ apptForm }}
+        </table>
+        <input type="submit" value="Submit"/>
+      </form>
+    </div>
+  {% else %}
+    <div class="mx-auto h-100 text-center">
+        <img class="front-img" src="{% static 'media/chic_hair_design_front.jpg' %}"/>
+    </div>
+  {% endif %}
+</div>
+{% endblock content %}
