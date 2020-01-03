@@ -25,7 +25,10 @@ except ImportError:
     SECRET_KEY = 'This is not the real secret key, it is for testing'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+try:
+    from .local_settings import DEBUG
+except ImportError:
+    DEBUG = True
 
 try:
     from .local_settings import ALLOWED_HOSTS
@@ -128,9 +131,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    '/var/www/static/',
-]
+try:
+    from .local_settings import STATIC_URL
+except ImportError:
+    STATIC_URL = '/static/'
+
+try:
+    from .local_settings import STATICFILES_DIRS
+except ImportError:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "static"),
+        '/var/www/static/',
+    ]

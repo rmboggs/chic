@@ -18,7 +18,15 @@ footer div {
 h5.success {
   color: green;
 }
-
+.appt-list td {
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+}
+.appt-list-alt td {
+  background-color: #ccc;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+}
 /*---Media Queries --*/
 
 @media (max-width: 992px) {}

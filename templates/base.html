@@ -33,10 +33,13 @@
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                      <a class="nav-link" href="{% url 'logout' %}">Logout ({{ user.username }})</a>
+                      <a class="nav-link" href="/appointments">Appointments</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="/admin">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'logout' %}">Logout ({{ user.username }})</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
@@ -51,7 +54,7 @@
     <footer>
         <div class="container-fluid padding">
             <div class="row">
-                <div class="col-md-12 text-center">
+                <div class="col-md-12 text-center padding">
                     Chic Hair Design - Copyright&copy; {% now "Y" %}
                 </div>
             </div>
