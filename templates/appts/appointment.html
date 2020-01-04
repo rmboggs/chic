@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+  <div class="mx-auto move-down-a-bit">
+    {% if message is not None and message != '' %}
+    <h5 class="failure">{{ message }}</h5>
+    {% endif %}
+    {% if apptForm.errors  %}
+      <h6 class="failure">Please correct any errors before saving</h6>
+    {% endif %}
+    <form method="post" action="/appt/">
+      {% csrf_token %}
+      <table>
+        {{ apptForm }}
+      </table>
+      <input type="submit" value="Submit"/>
+    </form>
+  </div>
+</div>
+{% endblock content %}

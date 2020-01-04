@@ -1,4 +1,5 @@
 from datetime import timedelta
+from django import forms
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -73,4 +74,4 @@ class Appointment(models.Model):
 class AppointmentForm(ModelForm):
     class Meta:
       model = Appointment
-      fields = ['client_name', 'service', 'stylist', 'service_date', 'cash_sales', 'credit_sales']
+      fields = ['id', 'client_name', 'service', 'stylist', 'service_date', 'cash_sales', 'credit_sales']

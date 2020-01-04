@@ -1,9 +1,12 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Appointment, AppointmentForm
 import chic.settings
+from datetime import datetime
 
 # Create your views here.
 def index(request):
@@ -24,10 +27,59 @@ def index(request):
 
 @login_required(login_url='/login/')
 def appointments(request):
-    appointment_list = Appointment.objects.all()
+    post_start_date = request.POST.get('start_date')
+    post_end_date = request.POST.get('end_date')
+
+    if post_start_date is not None and post_start_date != '':
+        start_date = datetime.strptime(post_start_date, "%Y-%m-%d").date()
+    else:
+        start_date = None
+
+    if post_end_date is not None and post_end_date != '':
+        end_date = datetime.strptime(post_end_date, "%Y-%m-%d").date()
+    else:
+        end_date = None
+
+    if start_date is not None or end_date is not None:
+        if end_date is None:
+            appointment_list = Appointment.objects.filter(service_date__gte=start_date)
+        elif start_date is None:
+            appointment_list = Appointment.objects.filter(service_date__lte=end_date)
+        else:
+            appointment_list = Appointment.objects.filter(service_date__range=(start_date, end_date))
+    else:
+        appointment_list = Appointment.objects.all()
+
     pagi = Paginator(appointment_list, 50)
     page = request.GET.get('page')
 
     appts = pagi.get_page(page)
     context = {'appointments': appts}
+
     return render(request, 'appts/appointments.html', context)
+
+@login_required(login_url='/login/')
+def modify_appointment(request, app_id=None):
+    context = {}
+
+    if app_id is not None:
+        appt = get_object_or_404(Appointment, pk=app_id)
+
+        form = AppointmentForm(instance=appt)
+        context['apptForm'] = form
+
+        return render(request, 'appts/appointment.html', context)
+
+    form = AppointmentForm(request.POST or None, request.FILES or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.instance.save()
+            success_message = "Record '%i' saved successfully" % (form.instance.id)
+            messages.info(request, success_message, extra_tags='success')
+            return redirect('/appointments')
+        else:
+            context['apptForm'] = form
+            return render(request, 'appts/appointment.html', context)
+
+    return redirect('/appointments')

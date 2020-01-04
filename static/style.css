@@ -15,8 +15,11 @@ footer div {
 .move-down-a-bit {
   padding-top: 1em;
 }
-h5.success {
+.success {
   color: green;
+}
+.failure {
+  color: red;
 }
 .appt-list td {
   padding-left: 0.75em;
