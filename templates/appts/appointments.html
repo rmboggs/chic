@@ -22,7 +22,7 @@
   <div class="row">
     <table class="mx-auto col-md-6">
       <tr>
-          <!--<th>Appointment Id</th>-->
+          <th>Id</th>
           <th>Appointment Date</th>
           <th>Stylist</th>
           <th>Credit Sales</th>
@@ -31,7 +31,7 @@
       </tr>
       {% for appt in appointments %}
       <tr class="{% cycle 'appt-list' 'appt-list-alt' %}">
-        <!--<td><a href="/appt/{{ appt.id }}/">{{ appt.id }}</a></td>-->
+        <td><a href="/appt/{{ appt.id }}/">{{ appt.id }}</a></td>
         <td>{{ appt.service_date|date:"SHORT_DATETIME_FORMAT" }}</td>
         <td>{{ appt.stylist }}</td>
         <td>{{ appt.credit_sales }}</td>

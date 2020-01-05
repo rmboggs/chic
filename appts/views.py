@@ -59,27 +59,18 @@ def appointments(request):
     return render(request, 'appts/appointments.html', context)
 
 @login_required(login_url='/login/')
-def modify_appointment(request, app_id=None):
-    context = {}
+def modify_appointment(request, app_id):
+    appt = get_object_or_404(Appointment, pk=app_id)
+    context = { 'appt_id': app_id }
 
-    if app_id is not None:
-        appt = get_object_or_404(Appointment, pk=app_id)
-
-        form = AppointmentForm(instance=appt)
-        context['apptForm'] = form
-
-        return render(request, 'appts/appointment.html', context)
-
-    form = AppointmentForm(request.POST or None, request.FILES or None)
+    form = AppointmentForm(request.POST or None, instance=appt)
 
     if request.method == 'POST':
         if form.is_valid():
-            form.instance.save()
-            success_message = "Record '%i' saved successfully" % (form.instance.id)
+            form.save()
+            success_message = "Record '%i' saved successfully" % (app_id)
             messages.info(request, success_message, extra_tags='success')
             return redirect('/appointments')
-        else:
-            context['apptForm'] = form
-            return render(request, 'appts/appointment.html', context)
 
-    return redirect('/appointments')
+    context['apptForm'] = form
+    return render(request, 'appts/appointment.html', context)
