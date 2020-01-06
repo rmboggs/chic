@@ -59,6 +59,19 @@ def appointments(request):
     return render(request, 'appts/appointments.html', context)
 
 @login_required(login_url='/login/')
+def new_appointment(request):
+    form = AppointmentForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            success_message = "Record saved successfully"
+            messages.info(request, success_message, extra_tags='alert-success')
+            form = AppointmentForm()
+
+    context = {'apptForm': form}
+    return render(request, 'appts/appointment.html', context)
+
+@login_required(login_url='/login/')
 def modify_appointment(request, app_id):
     appt = get_object_or_404(Appointment, pk=app_id)
     context = { 'appt_id': app_id }

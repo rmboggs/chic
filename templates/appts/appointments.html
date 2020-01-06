@@ -2,62 +2,79 @@
 {% load static %}
 {% block content %}
 
-<div class="container-fluid padding text-center">
+<div class="container-fluid pt-3">
 
     {% if messages %}
-      {% for msg in messages %}
-      <h6 class="{{ msg.tags }}">{{ msg }}</h6>
-      {% endfor %}
+      <div class="row justify-content-center">
+        {% for msg in messages %}
+        <h6 class="col-4 align-middle p-2 {{ msg.tags }}">{{ msg }}</h6>
+        {% endfor %}
+      </div>
     {% endif %}
-  <p/>
-    <form method="post" action="#">
-      {% csrf_token %}
-      <label for="start_date">Start Date:</label>
-      <input type="date" name="start_date" value=""/>
-      <label for="end_date">End Date:</label>
-      <input type="date" name="end_date" value=""/>
-      <input type="submit" value="Submit"/>
-    </form>
-  <p/>
-  <div class="row">
-    <table class="mx-auto col-md-6">
+  <div class="row justify-content-center text-center p-2">
+    <div class="col-6 p-2 align-middle border">
+
+        <form method="post" action="#">
+          {% csrf_token %}
+          <label for="start_date">Start Date:</label>
+          <input type="date" name="start_date" value=""/>
+          <label for="end_date">End Date:</label>
+          <input type="date" name="end_date" value=""/>
+          <input type="submit" value="Search"/>
+        </form>
+    </div>
+  </div>
+  <div class="row justify-content-center text-center">
+    <table class="table table-striped table-bordered table-hover table-sm col-10">
+      <thead class="thead-dark">
       <tr>
-          <th>Id</th>
-          <th>Appointment Date</th>
-          <th>Stylist</th>
-          <th>Credit Sales</th>
-          <th>Cash Sales</th>
-          <th>Total Sales</th>
+          <th scope="col"></th>
+          <th scope="col">Date</th>
+          <th scope="col">Time</th>
+          <th scope="col">Stylist</th>
+          <th scope="col">Service</th>
+          <th scope="col">Credit Sales</th>
+          <th scope="col">Cash Sales</th>
+          <th scope="col">Total Sales</th>
       </tr>
+      </thead>
+      <tbody>
       {% for appt in appointments %}
-      <tr class="{% cycle 'appt-list' 'appt-list-alt' %}">
-        <td><a href="/appt/{{ appt.id }}/">{{ appt.id }}</a></td>
-        <td>{{ appt.service_date|date:"SHORT_DATETIME_FORMAT" }}</td>
+      <!--<tr class="{% cycle 'appt-list' 'appt-list-alt' %}">-->
+      <tr>
+        <td><a href="/appt/{{ appt.id }}/"><i class="fas fa-edit"></i></a></td>
+        <td>{{ appt.service_date|date:"SHORT_DATE_FORMAT" }}</td>
+        <td>{{ appt.service_date|time:"g:i A" }}</td>
         <td>{{ appt.stylist }}</td>
-        <td>{{ appt.credit_sales }}</td>
-        <td>{{ appt.cash_sales }}</td>
-        <td>{{ appt.total_sales }}</td>
+        <td>{{ appt.service }}</td>
+        <td>${{ appt.credit_sales }}</td>
+        <td>${{ appt.cash_sales }}</td>
+        <td>${{ appt.total_sales }}</td>
       </tr>
       {% endfor %}
+      </tbody>
     </table>
   </div>
 
-  <div class="pagination mx-auto col-md-6">
-      <span class="step-links">
-          {% if appointments.has_previous %}
-              <a href="?page=1">&laquo; first</a>
-              <a href="?page={{ appointments.previous_page_number }}">previous</a>
-          {% endif %}
+  <div class="row justify-content-center">
 
-          <span class="current">
-              Page {{ appointments.number }} of {{ appointments.paginator.num_pages }}.
+      <div class="pagination">
+          <span class="step-links">
+              {% if appointments.has_previous %}
+                  <a href="?page=1">&laquo; first</a>
+                  <a href="?page={{ appointments.previous_page_number }}">previous</a>
+              {% endif %}
+
+              <span class="current">
+                  Page {{ appointments.number }} of {{ appointments.paginator.num_pages }}.
+              </span>
+
+              {% if appointments.has_next %}
+                  <a href="?page={{ appointments.next_page_number }}">next</a>
+                  <a href="?page={{ appointments.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
           </span>
-
-          {% if appointments.has_next %}
-              <a href="?page={{ appointments.next_page_number }}">next</a>
-              <a href="?page={{ appointments.paginator.num_pages }}">last &raquo;</a>
-          {% endif %}
-      </span>
+      </div>
   </div>
 
 </div>

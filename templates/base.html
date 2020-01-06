@@ -17,7 +17,8 @@
     <script src="{% static "js/jquery-3.4.1.slim.min.js" %}"></script>
     <script src="{% static "js/popper.min.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
-
+    <script src="https://kit.fontawesome.com/6a261fe7e4.js" crossorigin="anonymous"></script>
+    
     <link rel="stylesheet" href="{% static "/style.css" %}"/>
     <title>Chic Hair Design</title>
 </head>
@@ -32,21 +33,16 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
-                    <li class="nav-item">
-                      <a class="nav-link" href="/appointments">Appointments</a>
-                    </li>
-                    <!--
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Reports
+                        Actions
                       </a>
                       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">By Month</a>
-                        <a class="dropdown-item" href="#">By Quarter</a>
-                        <a class="dropdown-item" href="#">By Year</a>
+                        <a class="dropdown-item" href="\appt">Add Appointment</a>
+                        <a class="dropdown-item" href="\appointments">View Appointments</a>
+                        <!--<a class="dropdown-item" href="#">By Year</a>-->
                       </div>
                     </li>
-                    -->
                     <li class="nav-item">
                       <a class="nav-link" href="/admin">Admin</a>
                     </li>
@@ -63,14 +59,11 @@
         </div>
     </nav>
     {% block content %}{% endblock %}
-    <footer>
-        <div class="container-fluid padding">
-            <div class="row">
-                <div class="col-md-12 text-center padding">
-                    Chic Hair Design - Copyright&copy; {% now "Y" %}
-                </div>
-            </div>
-        </div>
+
+    <footer class="footer mt-auto text-center">
+      <div class="container">
+        <span class="text-muted">Chic Hair Design - Copyright&copy; {% now "Y" %}</span>
+      </div>
     </footer>
 </body>
 

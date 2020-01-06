@@ -1,3 +1,8 @@
+body {
+   min-height: 200px;
+   margin-bottom: 50px;
+   clear: both;
+}
 footer {
     background-color: #333;
     width: 100%;
@@ -8,12 +13,8 @@ footer div {
     font-size: 0.85em;
     color: #fff;
 }
-.front-img {
-    padding: 10%;
-    width: 85%;
-}
-.move-down-a-bit {
-  padding-top: 1em;
+img.resize {
+    max-width: 60%;
 }
 .success {
   color: green;
