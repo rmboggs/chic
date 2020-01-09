@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid pt-3">
+
+  {% if messages %}
+    <div class="row justify-content-center">
+      {% for msg in messages %}
+      <div class="col-6 align-middle alert {{ msg.tags }}">
+        {{ msg }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  <form method="post" action="#">
+    {% csrf_token %}
+    <div class="row justify-content-center">
+      <div class="border p-2 align-middle">
+        <label for="appt_date">Date:</label>
+        <input type="date" name="appt_date" value="{% now 'Y-m-d' %}"/>
+        <button type="submit" class="btn btn-primary btn-sm" name="get">Get</button>
+      </div>
+    </div>
+    <div class="row justify-content-center pt-2">
+      <button type="submit" class="btn btn-outline-primary" name="new">New Appointment</button>
+    </div>
+  </form>
+
+
+  <div class="list-group p-2">
+  {% for appt in appts %}
+
+    <div class="row justify-content-center">
+    <a href="/appt/{{ appt.id }}/" class="col-4 list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-50 justify-content-between">
+        <small class="align-middle">{{ appt.service_date|time:"g:i A" }}</small>
+        <h5 class="mb-1">{{ appt.service }}</h5>
+      </div>
+    </a>
+    </div>
+  {% endfor %}
+  </div>
+</div>
+{% endblock content %}

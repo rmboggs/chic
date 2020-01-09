@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid pt-2">
+
+{% if items %}
+
+{% else %}
+<div class="row justify-content-center p-2">
+  <h4>Available Reports:</h4>
+</div>
+<div class="row justify-content-center p-2">
+  <div class="col-4 p-2">
+    <div class="card card-block">
+      <div class="card-body">
+        <h5 class="card-title">Report by day</h5>
+        <p class="card-text">Sales totals by day for a particular month.</p>
+        <a class="btn btn-primary btn-lg" href="/reports/day">View</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-4 p-2">
+    <div class="card card-block">
+      <div class="card-body">
+        <h5 class="card-title">Report by month</h5>
+        <p class="card-text">Sales totals by month for a particular year.</p>
+        <a class="btn btn-primary btn-lg" href="/reports/month">View</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-center p-2">
+  <div class="col-4 p-2">
+    <div class="card card-block">
+      <div class="card-body">
+        <h5 class="card-title">Report by quarter</h5>
+        <p class="card-text">Sales totals by quarter for a particular year.</p>
+        <a class="btn btn-primary btn-lg" href="/reports/quarter">View</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-4 p-2">
+    <div class="card card-block">
+      <div class="card-body">
+        <h5 class="card-title">Report by year</h5>
+        <p class="card-text">Sales totals by year.</p>
+        <a class="btn btn-primary btn-lg" href="/reports/year">View</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+</div>
+{% endblock content %}
